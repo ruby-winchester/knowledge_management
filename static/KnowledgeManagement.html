@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<meta charset="utf-8">
+		<title>考试后台管理系统</title>
+		<script src="./js/jquery-3.3.1.min.js"></script>
+		<!--ajax所在的js包-->
+		<link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.css">
+		<link rel="stylesheet" type="text/css" href="./bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./css/custom.css">
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+		<link rel="stylesheet" href="./css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="./css/animate.css" media="all">
+		<!-- jQuery -->
+		<script type="text/javascript" charset="utf8" src="./js/jquery.js"></script>
+
+		<!-- DataTables -->
+		<script type="text/javascript" charset="utf8" src="./js/jquery.dataTables.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/handlebars-v3.0.1.js"></script>
+
+		<!--DataTablesButtons-->
+		<script type="text/javascript" charset="utf8" src="./Buttons-1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="./Buttons-1.5.1/js/buttons.html5.min.js"></script>
+
+		<link rel="stylesheet" href="./Buttons-1.5.1/css/buttons.dataTables.min.css">
+		<!--css-->
+		<style>
+			table {
+				*border-collapse: collapse;
+				border-spacing: 0;
+				width: 80%;
+				border: 1px solid #ccc;
+				text-decoration: none;
+				table-layout: fixed;
+			}
+			
+			h1 {
+				font-family: "微软雅黑";
+				font-size: 24px;
+				color: blue;
+			}
+			
+			h2 {
+				font-family: "宋体";
+				font-size: 37px;
+				color: black;
+			}
+			
+			button {
+				background: gray;
+				height: 36px;
+				width: 80px;
+			}
+			
+			a {
+				font-family: "宋体";
+				font-size: 18px;
+				color: darkblue;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div>			
+			<div>
+				<div>
+					<br/>
+					<center><h2>知识点详情</h2></center>
+				</div>
+				<div>
+					<div>
+						<table id="table" class="display">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>名称</th>
+									<th>备注</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
+
+					
+					<!--添加教师弹出框      设置属性为隐藏-->
+					<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="flase">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+											&times;
+										</button>
+								
+								</div>
+								<br/>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label for="kl_id" class="col-sm-2 control-label">序号</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="kl_id" placeholder="ID Input">
+										</div>
+										<!--<div class="col-sm-2">
+												<p class="help-block">Your help text!</p>
+											</div>-->
+									</div>
+									<div class="form-group">
+										<label for="kl_name" class="col-sm-2 control-label">名称</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="kl_name" placeholder="Name Input">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="kl_node" class="col-sm-2 control-label">备注</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="kl_node" placeholder="Node Input">
+										</div>
+									</div>								
+								</div>
+								
+								<div class="modal-footer">
+									<!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>										-->
+									<button type="button" class="btn btn-primary" onclick="AddKnowledgePoint()">提交更改</button>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal -->
+					</div>
+					
+					
+
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+											&times;
+										</button>
+								</div>
+								<br/>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label for="num" class="col-sm-2 control-label">序号</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="num" placeholder="Num Input">
+										</div>
+										<!--<div class="col-sm-2">
+												<p class="help-block">Your help text!</p>
+											</div>-->
+									</div>
+									<div class="form-group">
+										<label for="name" class="col-sm-2 control-label">名称</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="name" placeholder="Name Input">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="node" class="col-sm-2 control-label">备注</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control1" id="node" placeholder="Node">
+										</div>
+									</div>								
+								</div>
+								
+								<div class="modal-footer">
+									<!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>										-->
+									<button type="button" class="btn btn-primary" onclick="replace()">提交更改</button>																			
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal -->
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--定义删除按钮-->
+		<script id="tpl" type="text/x-handlebars-template">
+			{{#each func}}
+			<button type="button" class="btn btn-{{this.type}} btn-sm" onclick="{{this.fn}}">{{this.name}}</button> {{/each}}
+		</script>
+		<!--定义修改操作按钮-->
+		<script id="tp2" type="text/x-handlebars-template">
+			{{#each func}}
+			<button type="button" class="btn btn-{{this.type}} btn-sm" data-toggle="modal" data-target="#myModal" onclick="{{this.fn}}">{{this.name}}</button> {{/each}}
+		</script>
+
+		<script>
+			$(function() {
+				var table;
+				/*$('#start_date').datetimepicker();*/ //获取系统时间
+				//定义按钮模板
+				var tpl = $("#tpl").html();
+				var tp2 = $("#tp2").html();
+				//预编译模板
+				var template = Handlebars.compile(tpl);
+				var template2 = Handlebars.compile(tp2);
+				$.ajax({
+					url: "http://127.0.0.1:8080/KnowledgePointManage/SelectKnowledge", //加上这句话
+					type: 'POST', //请求的类型
+					async: false,
+					dataType: "text", //数据类型
+					data: {},
+					success: function(data) //操作后台的返回值
+					{
+						data = JSON.parse(data);
+						var table = $('#table').DataTable({
+							dom: 'Bfrtip',
+							//在Datatables中添加自定义按钮
+							buttons: [{
+								text: '添加',
+								//data-target="#add",
+								action: function(e, dt, node, config) {
+									
+									<!--alert("button");-->
+									$("#add").modal('show');
+								}
+							}],
+							data: data.body,
+							"paging": false, //禁止分页
+							retrieve: true, //实例化检索
+							"columns": [{
+									data: 'kl_id'
+								},
+								{
+									data: 'kl_name'
+								},
+								{
+									data: 'kl_node'
+								},
+								{
+									data: null//占位空列
+								} 
+							],
+							"columnDefs": [{
+									"searchable": false,
+									"orderable": false,
+									"targets": [0. - 1]
+								},
+								{
+									"targets": 3,
+									"render": function(a, b, c, d) {
+											var context = {
+												func: [													
+													{
+														"name": "删除",
+														"fn": "del(\'" + c.kl_id + "\')",
+														"type": "danger"
+													}, //添加按键     name为按键属性
+												]
+											};
+										var html1 = template(context);
+										var context2 = {
+											func: [{
+													"name": "修改",
+													"fn": "edit(\'" + c.kl_id + "\',\'" + c.kl_name + "\',\'" + c.kl_node + "\')",
+													"type": "primary"
+												},
+											]
+											};
+										
+										var html2 = template2(context2);
+										return html1 + html2;
+									}
+								},
+							]
+						});
+						//table.buttons().container().appendTo('#btn btn-danger btn-sm');
+					}
+				});
+			})
+		</script>
+
+		<!--内嵌的JavaScript程序-->
+		<script>
+			/*初始化datatable*/
+			/*$(document).ready( 
+			function ()
+			{
+				$('#table').DataTable();
+			})*/
+			var id;
+
+			function del(kl_id) {
+				/*alert(typeof tc_id); 查看数据类型*/
+
+				var r = confirm("确定删除?");
+				if(r == true) {
+					$.ajax({
+						url: "http://127.0.0.1:8080/KnowledgePointManage/DeleteKnowledgePoint",
+						type: 'POST', //请求的类型
+						async: false,
+						dataType: "text", //数据类型
+						data: {
+							"kl_id": kl_id, //向后台传递数据
+						},
+						success: function(data) {
+						if(data == 1)
+						{location.reload(); //刷新页面
+//					  	console.log("删除成功" + data);
+                        }
+						else
+						alert("删除失败");
+						}
+					});
+				}
+			}
+
+			function edit(kl_id, kl_name, kl_node) {
+				/*console.log(kl_id);*/
+				editFlag = true;
+				/*$("#myModal").text("修改");*/
+				$("#num").val(kl_id);
+				/*$("#kl_name").val(kl_name).attr("disabled",true);*/
+				$("#name").val(kl_name);
+				$("#node").val(kl_node);
+				/*$("#level").val(kl_level);*/
+				/*$("#myModal").modal("show");*/
+				id = kl_id;
+			}
+
+			function replace() {
+				if(!kl_id || !kl_name )
+					alert("请输入完整信息");
+				else {
+					$.ajax({
+						url: "http://127.0.0.1:8080/KnowledgePointManage/UpdateKnowledgePoint", //加上这句话
+						type: 'POST', //请求的类型
+						async: false,
+						dataType: "text", //数据类型
+						data: {
+							"id": id,
+							"kl_id": $("#num").val(), //向后台发送数据，并在后台判断用户名和密码是否正确，正确则返回true
+							"kl_name": $("#name").val(),
+							"kl_node": $("#node").val(),
+						},
+						success: function(data) //操作后台的返回值
+						{
+							if(data == 1) //如果前台返回的是True，执行以下操作
+							{
+								alert("成功修改知识点信息");
+								location.reload();
+								/*table.reload();*/
+							} else {
+								alert("该知识点已存在");
+							}
+						}
+					})
+				}
+			}
+
+			function AddKnowledgePoint() //login函数
+			{
+				var kl_id = document.getElementById("kl_id").value;
+				var kl_name = document.getElementById("kl_name").value; //获取用户名
+				var kl_node = document.getElementById("kl_node").value; //获取密码
+				//向后台发送数据，向后台发送post请求
+				if(!kl_id || !kl_name)
+					alert("请输入完整信息");
+				else {
+					$.ajax({
+						url: "http://127.0.0.1:8080/KnowledgePointManage/AddKnowledgePoint", //加上这句话
+						type: 'POST', //请求的类型
+						async: false,
+						dataType: "text", //数据类型
+						data: {
+							"kl_id": $("#kl_id").val(),
+							"kl_name": $("#kl_name").val(),
+							"kl_node": $("#kl_node").val(),
+						},
+						success: function(data) //操作后台的返回值
+						{
+							if(data == 1) //如果前台返回的是True，执行以下操作
+							{
+								alert("添加成功"); //登录成功时跳出提示框
+								location.reload();
+								/*table.reload();*/
+							} else {
+								alert("该知识点已存在");
+							}
+						}
+					})
+				}
+			}
+		</script>
+	</body>
+
+</html>
